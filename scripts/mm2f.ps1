@@ -1,6 +1,7 @@
 ## Multi package Manager packages To a File
 ## Usage: mm2f.ps1 [packages.yml]
-## Requires: winget, choco, scoop
+## Requirements:
+## - powershell 7 (For running the script)
 
 param(
     [string]$Path = ".\packages.yml"

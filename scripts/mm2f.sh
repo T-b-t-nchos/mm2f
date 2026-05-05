@@ -2,7 +2,10 @@
 
 # Multi package Manager packages To a File
 # Usage: mm2f.sh [packages.yml]
-# Requires: apt, scoop
+# Requirements:
+# - bash (For running the script)
+# - sudo (For running as root)
+# - wget (For installing yq)
 
 YAML="${1:-./packages.yml}"
 
