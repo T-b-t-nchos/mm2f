@@ -34,7 +34,7 @@ options:
       scoop: scoop install {id}
 
   linux:
-    priority: [apt, scoop]
+    priority: [apt, linuxscoop, scoop]
     commands:
       apt: sudo apt install -y {id}
       linuxscoop: scoop install {id}
