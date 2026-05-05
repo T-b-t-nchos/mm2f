@@ -54,7 +54,7 @@ foreach ($p in $conf.packages) {
             if ($LASTEXITCODE -eq 0) { $installed = $true }
         }
         "choco" {
-            choco list --local-only --exact $id 1>$null 2>$null
+            choco list --exact $id 1>$null 2>$null
             if ($LASTEXITCODE -eq 0) { $installed = $true }
         }
         "winscoop" {

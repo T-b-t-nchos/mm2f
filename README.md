@@ -61,7 +61,6 @@ options:
     commands:
       winget: winget install --id {id} -e --accept-package-agreements --accept-source-agreements
       choco: choco install {id} -y
-      winscoop: scoop install {id}
       scoop: scoop install {id}
 
   # Same as above, but for Linux.
@@ -69,7 +68,6 @@ options:
     priority: [apt, linuxscoop, scoop]
     commands:
       apt: sudo apt install -y {id}
-      linuxscoop: scoop install {id}
       scoop: scoop install {id}
 
 packages:
