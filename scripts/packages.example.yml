@@ -1,5 +1,10 @@
 # packages.yml
 # List of packages to install
+#
+# CAUTION:
+#   Do not run this script with untrusted `packages.yml`.
+#   Always review the file or run in a sandbox/container.
+#
 
 options:
   windows:
