@@ -11,6 +11,10 @@ It's designed for use in dotfiles.
 > It's just a simple script to install packages with multiple package managers.
 > So, you need to install the package managers before using this script manually.  
 
+> [!CAUTION]
+> Do not run this script with untrusted `packages.yml`.  
+> Always review the file or run in a sandbox/container.  
+
 ## 🎉 Features
 - Manage packages with multiple package managers with a single file.
 - Customize the priority of package managers.
