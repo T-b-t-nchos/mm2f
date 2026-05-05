@@ -44,7 +44,7 @@ It's designed for use in dotfiles.
 ## 📦 Usage
 1. Install the package managers you want to use.
 2. Copy mm2f.sh, mm2f.ps1, or both files to the directory where you want to use it.
-3. Edit the `packages.yml` file. (You can use the `packages.example.yml` as a example.)
+3. Edit the `packages.yml` file. (You can use the `packages.example.yml` as an example.)
 4. Run the script.
 5. Enjoy!
 
