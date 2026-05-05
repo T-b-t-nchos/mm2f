@@ -23,7 +23,7 @@ It's designed for use in dotfiles.
 
 ### 🐧 Linux
 - bash (For running the script)
-- sudo (For runnning as root)
+- sudo (For running as root)
 - wget (For installing yq)
 
 ## 📦 Package managers
