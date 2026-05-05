@@ -9,7 +9,6 @@
 #       winget: winget install --id {id} -e --accept-package-agreements --accept-source-agreements
 #       choco: choco install {id} -y
 #       scoop: scoop install {id}
-#       winscoop: scoop install {id}
 #   linux:
 #     priority: [apt, linuxscoop, scoop]
 #     commands:

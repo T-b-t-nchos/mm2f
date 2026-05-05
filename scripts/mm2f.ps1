@@ -1,5 +1,5 @@
 ## Multi package Manager packages To a File
-## Usage: mm2f.ps1 [packages.yml] 
+## Usage: mm2f.ps1 [packages.yml]
 ## Requires: winget, choco, scoop
 
 param(
@@ -39,17 +39,16 @@ $defaultCommands = @{
 foreach ($p in $conf.packages) {
     $pm = $priority | Where-Object { $p.$_ } | Select-Object -First 1
 
-    $pm = if ($pm -eq "winscoop") { "scoop" } else { $pm }
-
     if (-not $pm) {
         Write-Host "Skipped: $($p.name)" -ForegroundColor Yellow
         continue
     }
 
     $id = $p.$pm
+    $checkPm = if ($pm -eq "winscoop") { "scoop" } else { $pm }
 
     $installed = $false
-    switch ($pm) {
+    switch ($checkPm) {
         "winget" {
             winget list --id $id -e 1>$null 2>$null
             if ($LASTEXITCODE -eq 0) { $installed = $true }

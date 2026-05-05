@@ -61,7 +61,7 @@ for ((i=0; i<len; i++)); do
         fi
     done
 
-    selected_pm=$([ "$selected_pm" = "linuxscoop" ] && echo "scoop" || echo "$selected_pm")
+    check_pm=$([ "$selected_pm" = "linuxscoop" ] && echo "scoop" || echo "$selected_pm")
 
     if [ -z "$selected_pm" ]; then
         echo -e "\033[1;33mSkipped: $name\033[0m"
@@ -69,14 +69,11 @@ for ((i=0; i<len; i++)); do
     fi
 
     installed=0
-    case "$selected_pm" in
+    case "$check_pm" in
         apt)
             dpkg -s "$id" >/dev/null 2>&1 && installed=1
             ;;
         scoop)
-            scoop list "$id" 2>/dev/null | grep -q "^$id" && installed=1
-            ;;
-        linuxscoop)
             scoop list "$id" 2>/dev/null | grep -q "^$id" && installed=1
             ;;
     esac
