@@ -6,7 +6,7 @@ This is a simple script to install packages with multiple package managers (wing
 You can customize the priority of package managers, the commands to install packages, and so on.   
 It's designed for use in dotfiles.
 
-> [!CAUTION]
+> [!WARNING]
 > This script is not a package manager.
 > It's just a simple script to install packages with multiple package managers.
 > So, you need to install the package managers before using this script manually.  
