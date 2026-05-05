@@ -12,11 +12,13 @@ if (!(Test-Path $Path)) {
     exit 1
 }
 
-if (-not (Get-Module -ListAvailable -Name powershell-yaml)) {
-    Write-Host "Installing powershell-yaml module..." -ForegroundColor Cyan
-    Install-Module -Name powershell-yaml -Force -Scope CurrentUser
+try {
+    Install-Module -Name powershell-yaml -Force -Scope CurrentUser -ErrorAction Stop
+} catch {
+    Write-Host "Failed to install powershell-yaml: $_" -ForegroundColor Red
+    exit 1
 }
-Import-Module powershell-yaml
+Import-Module powershell-yaml -ErrorAction Stop
 
 $conf = Get-Content $Path -Raw | ConvertFrom-Yaml
 
