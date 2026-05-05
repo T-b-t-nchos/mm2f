@@ -66,7 +66,7 @@ foreach ($p in $conf.packages) {
         }
         "scoop" {
             $out = scoop list $id 2>$null
-            if ($out -match "^\s*$id\s") { $installed = $true }
+            if ($out -match "^\s*$([regex]::Escape($id))\s") { $installed = $true }
         }
     }
 
