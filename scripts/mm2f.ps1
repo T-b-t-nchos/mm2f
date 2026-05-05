@@ -11,6 +11,12 @@ if (!(Test-Path $Path)) {
     exit 1
 }
 
+if (-not (Get-Module -ListAvailable -Name powershell-yaml)) {
+    Write-Host "Installing powershell-yaml module..." -ForegroundColor Cyan
+    Install-Module -Name powershell-yaml -Force -Scope CurrentUser
+}
+Import-Module powershell-yaml
+
 $conf = Get-Content $Path -Raw | ConvertFrom-Yaml
 
 $priority = $conf.options.windows.priority
