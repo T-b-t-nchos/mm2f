@@ -74,6 +74,7 @@ options:
     commands:
       apt: sudo apt install -y {id}
       scoop: scoop install {id}
+      pacman: sudo pacman -S --noconfirm {id}    
 
 packages:
   - name: Package name
