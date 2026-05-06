@@ -47,8 +47,17 @@ get_default_command() {
     esac
 }
 
-mapfile -t priority < <(yq -r '.options.linux.priority[]? // empty' "$YAML")
+mapfile -t priority < <(yq -r '.options.linux.priority[]?' "$YAML")
 [ ${#priority[@]} -eq 0 ] && priority=("${DEFAULT_PRIORITY[@]}")
+
+available_priority=()
+for pm in "${priority[@]}"; do
+    check_pm=$([ "$pm" = "linuxscoop" ] && echo "scoop" || echo "$pm")
+    if command -v "$check_pm" >/dev/null 2>&1; then
+        available_priority+=("$pm")
+    fi
+done
+[ ${#available_priority[@]} -eq 0 ] && available_priority=("${priority[@]}")
 
 len=$(yq '.packages | length' "$YAML")
 
@@ -58,9 +67,9 @@ for ((i=0; i<len; i++)); do
     selected_pm=""
     id=""
 
-    for pm in "${priority[@]}"; do
-        val=$(yq -r ".packages[$i].$pm // empty" "$YAML")
-        if [ -n "$val" ]; then
+    for pm in "${available_priority[@]}"; do
+        val=$(yq -r ".packages[$i].$pm" "$YAML")
+        if [ -n "$val" ] && [ "$val" != "null" ]; then
             selected_pm="$pm"
             id="$val"
             break
@@ -92,7 +101,7 @@ for ((i=0; i<len; i++)); do
         continue
     fi
 
-    template=$(yq -r ".options.linux.commands.$selected_pm // empty" "$YAML")
+    template=$(yq -r ".options.linux.commands.$selected_pm" "$YAML")
     if [ -z "$template" ]; then
         template=$(get_default_command "$selected_pm")
     fi
