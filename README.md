@@ -83,6 +83,7 @@ packages:
     scoop: Scoop package name (Optional)
     winscoop: Scoop package name (Only for Windows) (Optional)
     apt: Apt package name (Optional)
+    pacman: Packman package name (Only for Linux) (Optional)
     linuxscoop: Scoop package name (Only for Linux) (Optional)
 ```
 
