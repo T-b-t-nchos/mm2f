@@ -39,6 +39,7 @@ It's designed for use in dotfiles.
 ### 🐧 Linux
 - apt
 - scoop
+- pacman
 
 > [!NOTE]
 > If you want to install the scoop package only on Linux, you can use `linuxscoop` instead of `scoop`.
