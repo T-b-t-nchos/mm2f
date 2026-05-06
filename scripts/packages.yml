@@ -16,10 +16,11 @@ options:
       scoop: scoop install {id}
 
   linux:
-    priority: [apt, linuxscoop, scoop]
+    priority: [apt, linuxscoop, scoop, pacman]
     commands:
       apt: sudo apt install -y {id}
       linuxscoop: scoop install {id}
       scoop: scoop install {id}
+      pacman: sudo pacman -S --noconfirm {id}
 
 packages:

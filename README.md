@@ -39,6 +39,7 @@ It's designed for use in dotfiles.
 ### 🐧 Linux
 - apt
 - scoop
+- pacman
 
 > [!NOTE]
 > If you want to install the scoop package only on Linux, you can use `linuxscoop` instead of `scoop`.
@@ -69,10 +70,11 @@ options:
 
   # Same as above, but for Linux.
   linux:
-    priority: [apt, linuxscoop, scoop]
+    priority: [apt, linuxscoop, scoop, pacman]
     commands:
       apt: sudo apt install -y {id}
       scoop: scoop install {id}
+      pacman: sudo pacman -S --noconfirm {id}    
 
 packages:
   - name: Package name
@@ -81,6 +83,7 @@ packages:
     scoop: Scoop package name (Optional)
     winscoop: Scoop package name (Only for Windows) (Optional)
     apt: Apt package name (Optional)
+    pacman: Pacman package name (Only for Linux) (Optional)
     linuxscoop: Scoop package name (Only for Linux) (Optional)
 ```
 

@@ -36,18 +36,32 @@ if [ ! -f "$YAML" ]; then
     exit 1
 fi
 
-DEFAULT_PRIORITY=("apt" "linuxscoop" "scoop")
+DEFAULT_PRIORITY=("apt" "linuxscoop" "scoop" "pacman")
 
 get_default_command() {
     case "$1" in
         apt) echo "sudo apt install -y {id}" ;;
         scoop) echo "scoop install {id}" ;;
         linuxscoop) echo "scoop install {id}" ;;
+        pacman) echo "sudo pacman -S --noconfirm {id}" ;;
     esac
 }
 
-mapfile -t priority < <(yq -r '.options.linux.priority[]? // empty' "$YAML")
+mapfile -t priority < <(yq -r '.options.linux.priority[]?' "$YAML")
 [ ${#priority[@]} -eq 0 ] && priority=("${DEFAULT_PRIORITY[@]}")
+
+available_priority=()
+for pm in "${priority[@]}"; do
+    check_pm=$([ "$pm" = "linuxscoop" ] && echo "scoop" || echo "$pm")
+    if command -v "$check_pm" >/dev/null 2>&1; then
+        available_priority+=("$pm")
+    fi
+done
+if [ ${#available_priority[@]} -eq 0 ]; then
+    echo -e "\033[1;31mNo available package managers found.\033[0m"
+    echo -e "\033[1;31mConfigured priority: ${priority[*]}\033[0m"
+    exit 1
+fi
 
 len=$(yq '.packages | length' "$YAML")
 
@@ -57,9 +71,9 @@ for ((i=0; i<len; i++)); do
     selected_pm=""
     id=""
 
-    for pm in "${priority[@]}"; do
-        val=$(yq -r ".packages[$i].$pm // empty" "$YAML")
-        if [ -n "$val" ]; then
+    for pm in "${available_priority[@]}"; do
+        val=$(yq -r ".packages[$i].$pm" "$YAML")
+        if [ -n "$val" ] && [ "$val" != "null" ]; then
             selected_pm="$pm"
             id="$val"
             break
@@ -81,6 +95,9 @@ for ((i=0; i<len; i++)); do
         scoop)
             scoop list "$id" 2>/dev/null | grep -q "^$id" && installed=1
             ;;
+        pacman)
+            pacman -Qi "$id" >/dev/null 2>&1 && installed=1
+            ;;
     esac
 
     if [ "$installed" -eq 1 ]; then
@@ -88,8 +105,8 @@ for ((i=0; i<len; i++)); do
         continue
     fi
 
-    template=$(yq -r ".options.linux.commands.$selected_pm // empty" "$YAML")
-    if [ -z "$template" ]; then
+    template=$(yq -r ".options.linux.commands.$selected_pm" "$YAML")
+    if [ -z "$template" ] || [ "$template" = "null" ]; then
         template=$(get_default_command "$selected_pm")
     fi
 
