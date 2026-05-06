@@ -36,13 +36,14 @@ if [ ! -f "$YAML" ]; then
     exit 1
 fi
 
-DEFAULT_PRIORITY=("apt" "linuxscoop" "scoop")
+DEFAULT_PRIORITY=("apt" "linuxscoop" "scoop" "pacman")
 
 get_default_command() {
     case "$1" in
         apt) echo "sudo apt install -y {id}" ;;
         scoop) echo "scoop install {id}" ;;
         linuxscoop) echo "scoop install {id}" ;;
+        pacman) echo "sudo pacman -S --noconfirm {id}" ;;
     esac
 }
 
@@ -80,6 +81,9 @@ for ((i=0; i<len; i++)); do
             ;;
         scoop)
             scoop list "$id" 2>/dev/null | grep -q "^$id" && installed=1
+            ;;
+        pacman)
+            pacman -Qi "$id" >/dev/null 2>&1 && installed=1
             ;;
     esac
 
