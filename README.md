@@ -56,6 +56,8 @@ It's designed for use in dotfiles.
 ## 🔧 Configuration
 ```yaml
 # packages.yml
+
+# options is optional.
 options:
   windows:
     # Priority of package managers to install packages.
