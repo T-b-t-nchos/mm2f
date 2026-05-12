@@ -39,8 +39,24 @@ $defaultCommands = @{
     scoop  = 'scoop install {id}'
 }
 
+$availablePriority = @()
+
+foreach ($pm in $priority) {
+    $checkPm = if ($pm -eq "winscoop") { "scoop" } else { $pm }
+
+    if (Get-Command $checkPm -ErrorAction SilentlyContinue) {
+        $availablePriority += $pm
+    }
+}
+
+if ($availablePriority.Count -eq 0) {
+    Write-Host "No available package managers found." -ForegroundColor Red
+    Write-Host "Configured priority: $($priority -join ', ')" -ForegroundColor Red
+    exit 1
+}
+
 foreach ($p in $conf.packages) {
-    $pm = $priority | Where-Object { $p.$_ } | Select-Object -First 1
+    $pm = $availablePriority | Where-Object { $p.$_ } | Select-Object -First 1
 
     if (-not $pm) {
         Write-Host "Skipped: $($p.name)" -ForegroundColor Yellow
