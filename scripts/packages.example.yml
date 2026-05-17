@@ -8,19 +8,16 @@
 
 options:
   windows:
-    priority: [winget, choco, winscoop, scoop]
+    priority: [winget, choco, scoop]
     commands:
       winget: winget install --id {id} -e --accept-package-agreements --accept-source-agreements
       choco: choco install {id} -y
-      winscoop: scoop install {id}
       scoop: scoop install {id}
 
   linux:
     priority: [apt, linuxscoop, scoop, pacman]
     commands:
       apt: sudo apt install -y {id}
-      linuxscoop: scoop install {id}
-      scoop: scoop install {id}
       pacman: sudo pacman -S --noconfirm {id}
 
 packages:
@@ -136,5 +133,5 @@ packages:
     # Misc
     # =========================
   - name: zenhan
-    winscoop: zenhan
+    scoop: zenhan
 
