@@ -65,7 +65,7 @@ foreach ($p in $conf.packages) {
     $id = $p.$pm
 
     $installed = $false
-    switch ($selected_pm) {
+    switch ($pm) {
         "winget" {
             winget list --id $id -e 1>$null 2>$null
             if ($LASTEXITCODE -eq 0) { $installed = $true }
