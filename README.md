@@ -38,13 +38,7 @@ It's designed for use in dotfiles.
 
 ### 🐧 Linux
 - apt
-- scoop
 - pacman
-
-> [!NOTE]
-> If you want to install the scoop package only on Linux, you can use `linuxscoop` instead of `scoop`.
-> Windows users can use `winscoop` instead of `scoop`.
-> Also, you can use `scoop` if you want to install the scoop package on both Windows and Linux.
 
 ## 📦 Usage
 1. Install the package managers you want to use.
@@ -61,7 +55,7 @@ It's designed for use in dotfiles.
 options:
   windows:
     # Priority of package managers to install packages.
-    priority: [winget, choco, winscoop, scoop]
+    priority: [winget, choco, scoop]
 
     # Commands to install packages.
     # You can use {id} as a placeholder for the package ID.
@@ -72,10 +66,9 @@ options:
 
   # Same as above, but for Linux.
   linux:
-    priority: [apt, linuxscoop, scoop, pacman]
+    priority: [apt, pacman]
     commands:
       apt: sudo apt install -y {id}
-      scoop: scoop install {id}
       pacman: sudo pacman -S --noconfirm {id}    
 
 packages:
@@ -83,10 +76,8 @@ packages:
     winget: Winget package ID (Optional)
     choco: Chocolatey package name (Optional)
     scoop: Scoop package name (Optional)
-    winscoop: Scoop package name (Only for Windows) (Optional)
     apt: Apt package name (Optional)
     pacman: Pacman package name (Only for Linux) (Optional)
-    linuxscoop: Scoop package name (Only for Linux) (Optional)
 ```
 
 ## 🧩 Options

@@ -36,13 +36,11 @@ if [ ! -f "$YAML" ]; then
     exit 1
 fi
 
-DEFAULT_PRIORITY=("apt" "linuxscoop" "scoop" "pacman")
+DEFAULT_PRIORITY=("apt" "pacman")
 
 get_default_command() {
     case "$1" in
         apt) echo "sudo apt install -y {id}" ;;
-        scoop) echo "scoop install {id}" ;;
-        linuxscoop) echo "scoop install {id}" ;;
         pacman) echo "sudo pacman -S --noconfirm {id}" ;;
     esac
 }
@@ -52,7 +50,7 @@ mapfile -t priority < <(yq -r '.options.linux.priority[]?' "$YAML")
 
 available_priority=()
 for pm in "${priority[@]}"; do
-    check_pm=$([ "$pm" = "linuxscoop" ] && echo "scoop" || echo "$pm")
+    check_pm=$pm
     if command -v "$check_pm" >/dev/null 2>&1; then
         available_priority+=("$pm")
     fi
@@ -80,20 +78,15 @@ for ((i=0; i<len; i++)); do
         fi
     done
 
-    check_pm=$([ "$selected_pm" = "linuxscoop" ] && echo "scoop" || echo "$selected_pm")
-
     if [ -z "$selected_pm" ]; then
         echo -e "\033[1;33mSkipped: $name\033[0m"
         continue
     fi
 
     installed=0
-    case "$check_pm" in
+    case "$selected_pm" in
         apt)
             dpkg -s "$id" >/dev/null 2>&1 && installed=1
-            ;;
-        scoop)
-            scoop list "$id" 2>/dev/null | grep -q "^$id" && installed=1
             ;;
         pacman)
             pacman -Qi "$id" >/dev/null 2>&1 && installed=1
