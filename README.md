@@ -40,11 +40,6 @@ It's designed for use in dotfiles.
 - apt
 - pacman
 
-> [!NOTE]
-> If you want to install the scoop package only on Linux, you can use `linuxscoop` instead of `scoop`.
-> Windows users can use `winscoop` instead of `scoop`.
-> Also, you can use `scoop` if you want to install the scoop package on both Windows and Linux.
-
 ## 📦 Usage
 1. Install the package managers you want to use.
 2. Copy mm2f.sh, mm2f.ps1, or both files to the directory where you want to use it.
